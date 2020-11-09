@@ -1,5 +1,6 @@
-{% load static%}
 
+{% load static%}
+{% load compress%}
 
 
 <!DOCTYPE html>
@@ -23,10 +24,18 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    {% compress css%}
+        <link
+        href="{% static 'base/css/style.css' %}"
+        rel="stylesheet"
+        type="text/css"
+        />
+    {% endcompress%}
+
     
     <title>Python Django StockTrader App</title>
   </head>
-<body background="{% static 'base/img/stockmarket2.jpg'%}">
+<body id="Aboutb" background="{% static 'base/img/stockmarket2.jpg'%}">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -35,7 +44,7 @@
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" id="navtitle">Welcome to the Stock Trader!!</a>
+        <a class="navbar-brand" id="navtitle"><u><strong>Welcome to the Stock Trader!!</strong></u></a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -119,5 +128,14 @@ $(document).ready(() => {
     });
 });
 </script>
+<div>
+    <footer class="footer">
+      <div class="container-fluid">
+           <div style="text-align:center;margin-top:65px;font-size:20px;color:black;">
+               <p> 2020 &copy The Trader<br> RR</p><br>
+            </div>
+       </div>
+    </footer>
+    </div>
 </body>
 </html>
