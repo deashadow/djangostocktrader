@@ -24,14 +24,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     
-    <title>Python Django App</title>
+    <title>Python Django StockTrader App</title>
   </head>
 <body background="{% static 'base/img/stockmarket2.jpg'%}">
-<h3><u>Welcome to the Stock Trader!!</u></h3>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" id="navtitle">Welcome to the Stock Trader!!</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a class="nav-link" href="/about">About US</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li> 
+          <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle nav-item active" data-toggle="dropdown">Dropdown <b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link" href="#">Small</a></li>
+              <li><a class="nav-link" href="#">Original</a></li>
+              <li><a class="nav-link" href="#">Large</a></li>
+              <li class="dropdown-divider"></li>
+              <li><a class="nav-link" href="#">Separated link</a></li>
+              <li class="dropdown-divider"></li>
+              <li><a class="nav-link" href="#">One more separated link</a></li> -->
+            </ul>
+          </li>
+        </ul>
+        <form class="form-inline navbar-left hidden-xs hidden-sm" role="search">
+          <div class="form-group">
+            <input type="search" class="form-control" placeholder="Ticker Search" id="search">
+          </div>
+          <button id="submit" type="button" class="btn btn-success" onclick="getData()">Submit</button>
+        </form>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+<h3><u></u></h3>
 <div><a href="/user">add user</a></div>
 <div><a href="/users">list users</a>
-<div><a href="/about">About</a></div>
-<div><a href="/contact">Contact</a></div>
+
 <div><a href="/person">Person</a></div>
 <div><a href="/persons">Persons</a></div>
 <div><a href="/getTotal">getTotal</a></div>
