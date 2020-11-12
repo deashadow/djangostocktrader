@@ -67,22 +67,17 @@
         </ul>
         <form class="form-inline navbar-left hidden-xs hidden-sm" role="search">
           <div class="form-group">
-            <input type="search" class="form-control" placeholder="Ticker Search" id="search">
+            <input type="search" class="form-control" placeholder="Yahoo Finance===>>>" id="search">
           </div>
-          <button id="submit" type="button" class="btn btn-success" onclick="getData()">Submit</button>
+          <button id="submit" type="button" class="btn btn-success" onclick="window.location.href='http://finance.yahoo.com';">Go To YFinance</button>
         </form>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 <h3><u></u></h3>
-<div><a href="/user">add user</a></div>
-<div><a href="/users">list users</a>
-
-<div><a href="/person">Person</a></div>
-<div><a href="/persons">Persons</a></div>
-<div><a href="/getTotal">getTotal</a></div>
-<div><a href="/book">Book(s)</a></div><br>
-<div><a href="/product">Product (GET)</a></div><br>
+<div><a href="/products">Products</a></div>
+<!--<div><a href="/getTotal">getTotal</a></div> -->
+<div><a href="/product">Product (Stock Ticker)</a></div><br>
 <div>
     <form method="POST" action="product">
         <button type="submit">product (POST)</button>
@@ -129,7 +124,7 @@ $(document).ready(() => {
 });
 </script>
 <div>
-    <footer class="footer">
+    <footer id="homefooter" class="footer">
       <div class="container-fluid">
            <div style="text-align:center;margin-top:65px;font-size:20px;color:black;">
                <p> 2020 &copy The Trader<br> RR</p><br>
