@@ -1,0 +1,29 @@
+
+#Business {
+    height: 300px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
+#About {
+    text-align: center;
+}
+
+#home {
+    text-align: center;
+    text-emphasis: bold;
+}
+#one {
+    text-align: center;
+    font-size: 300%;
+    color: rgb(245, 90, 206);
+}
+
+
+
+#B {
+    display: flex;
+    justify-content: center;
+}
+

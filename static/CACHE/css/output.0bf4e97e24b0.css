@@ -1,0 +1,57 @@
+
+#Business {
+    height: 300px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
+#About {
+    text-align: center;
+}
+
+#home {
+    text-align: center;
+    text-emphasis: bold;
+    display: inline;
+    justify-content: center;
+}
+
+.Contact {
+    text-align: center;
+}
+
+#contact1 {
+    text-align: center;
+    text-emphasis: bold;
+    font-size: large;
+}
+
+#one {
+    text-align: center;
+    font-size: 300%;
+    color: rgb(245, 90, 206);
+}
+
+
+
+#B {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    color: black;
+}
+
+h3 {
+    text-align: center;
+}
+
+a {
+    font-size: 30px;
+}
+
+#homefooter {
+    margin-top: 335px;
+}
