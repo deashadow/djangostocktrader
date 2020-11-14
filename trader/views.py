@@ -23,6 +23,7 @@ def login_user( request):
             login( request, user)
             messages.success( request, ('You have been Successfully logged in!! Let us start Tradding'))
             return redirect(  'home')
+           # return render(request, 'home.html')
         else:
             messages.success( request, ('Error logging in??  Please try again...'))
             return redirect('login')

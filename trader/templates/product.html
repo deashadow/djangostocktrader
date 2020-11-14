@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% load compress%}
-{% block content%}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,8 +32,10 @@
     {% endcompress%}
     <title>Python Django StockTrader App</title>
   </head>
-  
+{% block content %}
+
 <body id="Pbody" background="{% static 'base/img/buysell.jpg'%}">
+
 <h3 class="Product">Welcome to the Ticker page!</h3>
 <div class="Product"><a href="/">Home</a></div>
 
@@ -103,6 +105,8 @@ $(document).ready( () => {
   })
 })
 </script>
+
 </body>
-{% endblock%}
+{% endblock %}
+
 </html>
