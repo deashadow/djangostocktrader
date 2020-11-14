@@ -1,5 +1,6 @@
-{% load static%}
-{% load compress%}
+
+{% load static %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,12 +30,35 @@
         type="text/css"
         />
     {% endcompress%}
-
-    
     <title>Python Django StockTicker App</title>
   </head>
+  
+<body background="{% static 'base/img/stockmarket2.jpg'%}">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <div class="container-fluid">
+       <div class="navbar-header">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" id="navtitle"><u><strong>Welcome to the Stock Ticker!!</strong></u></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/about">About US</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+         </ul>
+        <form class="form-inline navbar-left hidden-xs hidden-sm" role="search">
+          <div class="form-group">
+            <input type="search" class="form-control" placeholder="Yahoo Finance===>>" id="search">
+          </div>
+          <button id="submit" type="button" class="btn btn-success" onclick="window.location.href='http://finance.yahoo.com';">Go To YFinance</button>
+        </form>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
-<body>
     {% block content %}
 
 
@@ -42,8 +66,8 @@
     {% endblock %}
     <footer id="basefooter" class="footer">
       <div class="container-fluid">
-           <div style="text-align:center;margin-top:200px;font-size:20px;color:black;">
-               <p> 2020 &copy The Ticker<br> RR</p><br>
+           <div 
+               <p> 2020 &copy The Stock Ticker<br> RR</p><br>
             </div>
        </div>
     </footer>
@@ -51,6 +75,7 @@
         </div>
     </div>
 </body>
+
 </html>
 
  

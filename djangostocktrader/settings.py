@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-from pathlib import os
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,14 +32,21 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'trader.apps.TraderConfig',
+    'django.contrib.sites',
+    'registration', #activates django-registration-redux
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
+    'bootstrap_themes',
     'compressor',
+    'social_django',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'djangostocktrader.urls'
@@ -64,12 +72,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+                'django.template.context_processors.static',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'djangostocktrader.wsgi.application'
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 
 # Database
@@ -126,12 +143,38 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+PROJECT_DIR = os.path.dirname(__file__)
+MEDIA_ROOT = os.path.join( BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'static/')
-#COMPRESS_ROOT = STATIC_URL
+STATIC_ROOT = os.path.join( PROJECT_DIR, 'static')
+
 COMPRESS_ENABLED = True
 STATICFILES_FINDERS = {
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 }
+
+
+#registration
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+
+LOGIN_REDIRECT_URL = '/product/'  # where to redirect the user upon login 
+LOGIN_URL = '/accounts/login/'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "deashadow@gmail.com"
+EMAIL_HOST_PASSWORD = "3Managua"
+EMAIL_PORT = 587   # you have to use SSL or TLS
+EMAIL_USE_TLS = True 
+DEFAULT_FROM_EMAIL = "trader@mysterytrader.com"
+REGISTRATION_EMAIL_HTML = False
+
+#Social Auth - Facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '1098349333930754'
+SOCIAL_AUTH_FACEBOOK_SECRET = '3545b80c5e6d064f532a5f3e3f37379c'
+
+#SOCIAL_AUTH_REDIRECT_IS_HTTPS = True

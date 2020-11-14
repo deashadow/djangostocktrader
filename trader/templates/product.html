@@ -33,25 +33,40 @@
     <title>Python Django StockTrader App</title>
   </head>
   
-<body background="{% static 'base/img/buysell.jpg'%}">
-<h3 class="Product"><u>Welcome to the Ticker page!!</u></h3>
+<body id="Pbody" background="{% static 'base/img/buysell.jpg'%}">
+<h3 class="Product">Welcome to the Ticker page!</h3>
 <div class="Product"><a href="/">Home</a></div>
-<div class="Product"><a href="contact">Contact Us</a></div>
-<div class="Product"><a href="about">About Us</a></div>
+
 
 
 <br><br>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="Symbol"> <h4>Please enter the Ticker 'Symbol', ie: FB:</h4></div>
+       <div class="Symbol">
+        <form action="product" method="POST">
+            {% csrf_token %} 
+          <table>
+              {{productForm.as_table}}
+                <tr><td colspan="2"><br><button class="btn btn-primary btn-md" type="submit">Add</button>
+                   <button class="btn btn-success btn-lg" type="submit">Buy</button>                 
+                    <button class="btn btn-danger btn-md" type="submit">Sell</button>
+                </td></tr>
+           </table>
+        </form>
+      </div>
+      </div>
+        <div class="col-4">
+      <div><button id="showmsft">Show Image MSFT</button></div>
+    </div>
 
+    </div>
+  </div>
+</div>
 
-<div class="Symbol"> <h4>Please enter your Ticker Symbol:</h4></div>
-<div class="Symbol">
-    <form action="product" method="POST">
-    {% csrf_token %}
-    <table>
-    {{productForm.as_table}}
-    <tr><td colspan="2"><button type="submit">Add</button></td></tr>
-    </table>
-    </form>
+    
+  </div>
 </div>
 <script>
 function getCookie(c_name) {
@@ -87,7 +102,6 @@ $(document).ready( () => {
       })
   })
 })
-
 </script>
 </body>
 {% endblock%}

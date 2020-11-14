@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-     path('', include('trader.urls')),
+    path('', include('trader.urls')),
     path('admin/', admin.site.urls),
-]
+    path('accounts/', include('registration.backends.default.urls')),
+    path('', include('social_django.urls', namespace= 'social')),
+]   

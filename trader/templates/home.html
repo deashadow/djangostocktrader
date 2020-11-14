@@ -1,4 +1,4 @@
-
+{% extends 'base.html'%}
 {% load static%}
 {% load compress%}
 
@@ -31,98 +31,39 @@
         type="text/css"
         />
     {% endcompress%}
-
-    
     <title>Python Django StockTicker App</title>
   </head>
-<body id="Aboutb" background="{% static 'base/img/stockmarket2.jpg'%}">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" id="navtitle"><u><strong>Welcome to the Stock Ticker!!</strong></u></a>
-      </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" href="/about">About US</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li> 
-          <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle nav-item active" data-toggle="dropdown">Dropdown <b
-                class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a class="nav-link" href="#">Small</a></li>
-              <li><a class="nav-link" href="#">Original</a></li>
-              <li><a class="nav-link" href="#">Large</a></li>
-              <li class="dropdown-divider"></li>
-              <li><a class="nav-link" href="#">Separated link</a></li>
-              <li class="dropdown-divider"></li>
-              <li><a class="nav-link" href="#">One more separated link</a></li> -->
-            </ul>
-          </li>
-        </ul>
-        <form class="form-inline navbar-left hidden-xs hidden-sm" role="search">
-          <div class="form-group">
-            <input type="search" class="form-control" placeholder="Yahoo Finance===>>" id="search">
-          </div>
-          <button id="submit" type="button" class="btn btn-success" onclick="window.location.href='http://finance.yahoo.com';">Go To YFinance</button>
-        </form>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-<h3><u></u></h3>
-<div><a href="/products">Products</a></div>
-<!--<div><a href="/getTotal">getTotal</a></div> -->
-<div><a href="/product">Product (Stock Ticker)</a></div><br>
-<div>
-    <form method="POST" action="product">
-        <button type="submit">product (POST)</button>
-    </form>
-</div><br><br>
-<input type="text" id="total"/>
-<div id="outputArea"></div>
-<button id="getTotal">Get Total</button>
-<script>
-function getCookie(c_name) {
-    if (document.cookie.length > 0) {
-        c_start = document.cookie.indexOf(c_name + "=");
-        if (c_start != -1) {
-            c_start = c_start + c_name.length + 1;
-            c_end = document.cookie.indexOf(";", c_start);
-            if (c_end == -1) c_end = document.cookie.length;
-            return unescape(document.cookie.substring(c_start, c_end));
-        }
-    }
-    return "";
-}
-$(document).ready(() => {
-    console.log("script.js loaded and ready");
-    $.ajaxSetup({
-        headers: { "X-CSRFToken": getCookie("csrftoken") },
-    });
-    $("#getTotal").click(() => {
-        var url = "/getTotal";
-        $.ajax({
-            type: "POST",
-            url: url,
-            success: function (data) {
-                console.log('total=', data.total)
-                $("#total").val(data.total)
-                data = JSON.stringify(data);
-                console.log("retrieved data=" + data);
-                $("#outputArea").text(data);
-            },
-            error: function (data) {
-                console.log("ERROR: " + data);
-            },
-        });
-    });
-});
-</script>
+  
+  <body>
+{% block content%}
+    <h3><u></u></h3>
+      <br>
+{% if request.user.is_authenticated %}
+    <h1>
+        Welcome Trader!!
+        {% if request.user.first_name %} 
+            {{ request.user.first_name }}
+        {% else %}
+            {{ request.user.username}}
+        {% endif %}!<br><br>
+        Let's start Trading!!  Click on <a href="product">"Stock Ticker"</a><br>
+        <a href="{% url 'auth_logout' %}">Logout</a>
+    </h1>
+{% else %}
+    <h1>
+    Welcome, Mysterious Trader! 
+        Would you like to <a href="{% url 'auth_login' %}">Login</a>? or <a href="{% url 'registration_register'%}">SignUp</a>?
+    </h1>
+{% endif %}<br><br>
+<h2>The Mystery Trader currently has {{ count }} dollar(s) for Trading. <br>User location: {{ request.session.location }}</h2>
+ 
+
+
+  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+
+
+
+{% endblock%}
 <div>
     <footer id="homefooter" class="footer">
       <div class="container-fluid">
