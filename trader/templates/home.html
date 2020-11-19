@@ -48,14 +48,14 @@
         {% endif %}!<br><br>
         Let's start Trading!!  Click on <a href="product">"Stock Ticker"</a><br>
         <a href="{% url 'auth_logout' %}">Logout</a>
-    </h1>
+      </h1>
 {% else %}
     <h1>
     Welcome, Mysterious Trader! 
         Would you like to <a href="{% url 'auth_login' %}">Login</a>? or <a href="{% url 'registration_register'%}">SignUp</a>?
     </h1>
 {% endif %}<br><br>
-<h2>The Mystery Trader currently has {{ count }} dollar(s) for Trading. <br>User location: {{ request.session.location }}</h2>
+<h2>The Mystery Trader currently has {{ balance }} dollar(s) for Trading. <br>User location: {{ request.session.location }}</h2>
  
 
 
@@ -68,7 +68,7 @@
     <footer id="homefooter" class="footer">
       <div class="container-fluid">
            <div style="text-align:center;margin-top:65px;font-size:20px;color:black;">
-               <p> 2020 &copy The Ticker<br> RR</p><br>
+               <p> 2020 &copy The Stock Ticker<br> RR</p><br>
             </div>
        </div>
     </footer>

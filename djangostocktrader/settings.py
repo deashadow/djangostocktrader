@@ -14,7 +14,9 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#export DJANGO_SETTINGS.MODULE='trader.settings'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -64,7 +66,7 @@ ROOT_URLCONF = 'djangostocktrader.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,7 +97,7 @@ AUTHENTICATION_BACKENDS = (
 DATABASES = {
     'default': {
         #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
+       # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'studentdb01',
         'HOST': '127.0.0.1',
@@ -148,7 +150,6 @@ MEDIA_ROOT = os.path.join( BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join( PROJECT_DIR, 'static')
-
 COMPRESS_ENABLED = True
 STATICFILES_FINDERS = {
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -161,7 +162,7 @@ STATICFILES_FINDERS = {
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 
-LOGIN_REDIRECT_URL = '/product/'  # where to redirect the user upon login 
+LOGIN_REDIRECT_URL = '/home/'  # where to redirect the user upon login 
 LOGIN_URL = '/accounts/login/'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

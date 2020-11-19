@@ -35,12 +35,15 @@
 {% block content %}
 
 <body id="Pbody" background="{% static 'base/img/buysell.jpg'%}">
-
-<h3 class="Product">Welcome to the Ticker page!</h3>
-<div class="Product"><a href="/">Home</a></div>
-
-
-
+<div class="Product">
+      <form  action="{% url 'product' %}" class="form-inline navbar-left hidden-xs hidden-sm" role="search" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="search" class="form-control" placeholder="Enter Ticker Symbol" name="ticker">
+                </div>
+                <button type="submit" class="btn btn-success">Stock Quote ++</button>
+      </form>
+</div>
 <br><br>
 <div class="container">
   <div class="row">
@@ -56,20 +59,69 @@
                     <button class="btn btn-danger btn-md" type="submit">Sell</button>
                 </td></tr>
            </table>
+           <table>
+              {{bankaccountForm.as_table}}
+                
+           </table>
         </form>
+
+
       </div>
       </div>
-        <div class="col-4">
-      <div><button id="showmsft">Show Image MSFT</button></div>
+     <div>
     </div>
+{% if ticker %}
+    {{ ticker }}
+{% endif %}
 
-    </div>
-  </div>
-</div>
+{% if api %}
 
+    {% if api == "Error..." %}
+        There was an issue obtaining the data you requested,,  Try again !
+
+    {% else %}
+     <div>   <h2><u>{{ api.companyName }}</u></h2><br/></div>
+     <div> 
+           <h3> Price: ${{ api.latestPrice }}<br/><br>
+                Previous Close: ${{ api.previousClose }}<br/><br>
+                Market Cap: ${{ api.marketCap}}<br/><br>
+                52 wk High: ${{ api.week52High }}<br/><br>
+                52 wk Low: ${{ api.week52Low }}<br/><br>
+                YTD Change: {{ api.ytdChange }}<br/><br></h3>
+       </div>
+    {% endif %}
+
+{% endif %}
+
+
+          <div class="row-2">
+             <div class="col">
+             <div><button type="button" class="togglebtn">Show Ticker plot map</button></div><br>
+              <div class="mytickertoggle">
+                  <img src="/static/base/img/msft.png" alt="Ticker data info"/>
+             </div>
+           </div>
+        </div>
+      </div>
+      </div>
+    
+<style>
+    .mytickertoggle {
+      display:none;
+      
+    }
+</style>
     
   </div>
 </div>
+<script>
+    $(document).ready(function(){
+	  $('.togglebtn').click(function(){
+   	$('.mytickertoggle').toggle();
+	});
+});
+</script>
+
 <script>
 function getCookie(c_name) {
     if (document.cookie.length > 0) {

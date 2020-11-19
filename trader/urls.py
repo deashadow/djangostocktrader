@@ -20,14 +20,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-        path('', views.home, name='home'),   #localhost:8000/   -->> views.home()
-        path('login', views.login, name='login'),
-        path('logout', views.logout, name='logout'),
-        path('signup/$', views.signup, name='signup'),
-        path('about', views.about),
-        path('contact', views.contact),
-        path('product', views.product, name='product'),  #localhost:8000/product --> views.product()
+        path('', views.home, name="home"),   #localhost:8000/   -->> views.home()
+        path('login', views.login, name="login"),
+        path('logout', views.logout, name="logout"),
+        path('signup/', views.signup, name="signup"),
+        path('about', views.about, name="about"),
+        path('contact', views.contact, name="contact"),
+        path('product', views.product, name="product"),  #localhost:8000/product --> views.product()
        # path('products', views.products),
         path('getPrice/<id>', views.getPrice), #localhost:8000/getPrice/1 or something
 
-]       + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]       

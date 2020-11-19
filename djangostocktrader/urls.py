@@ -24,4 +24,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.default.urls')),
     path('', include('social_django.urls', namespace= 'social')),
-]   
+]   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -21,6 +21,8 @@
 
 .Product {
     text-align: center;
+    justify-content: center;
+    padding-left: 5%;
 }
 
 .Symbol {
@@ -76,3 +78,31 @@ a {
     background-image: url ();
 }
 
+.panel-title {
+    text-align: center;
+    font-size: 65px;
+}
+
+#panel-body {
+    font-size: 50px;
+}
+
+#loginagain {
+    text-align: center;
+    font-size: 55px;
+}
+
+#login1 {
+    font-size: 65px;
+    color: red;
+}
+
+#panel-title1 {
+    font-size: 40px;
+}
+
+::placeholder { /*
+    Chrome, Firefox, Opera, Safari 10.1 */
+    background-color: rgb(144, 223, 243);
+    color: black;
+}
