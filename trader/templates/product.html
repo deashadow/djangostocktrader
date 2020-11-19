@@ -78,17 +78,17 @@
        <h5> There was a problem, please enter a Valid Ticker Symbol,  Try again !</h5>
 
     {% else %}
-     <div>   <h2><u>{{ api.companyName }}</u></h2><br/></div>
-     <div class="col-3"> 
+     <div class="tickerinfo">   <h2><u>{{ api.companyName }}</u></h2><br/></div>
+        <div class="tickerinfo" "col-3"> 
               <span>  <h4> Price: ${{ api.latestPrice }}<br/><br></span>
               <span>Previous Close: ${{ api.previousClose }}<br/><br></span>
               <span>Market Cap: ${{ api.marketCap}}<br/><br></span>
               <span>52 wk High: ${{ api.week52High }}<br/><br></span>
               <span>52 wk Low: ${{ api.week52Low }}<br/><br></span>
               <span>YTD Change: {{ api.ytdChange }}<br/><br></span>
-              <span>Chart YTD: {{ api.chartytd }}</span>
-                    </h4>
+              <span>Chart YTD: {{ api.chartytd }}</h4></span>
        </div>
+     </div>
     {% endif %}
 
 {% endif %}

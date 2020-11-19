@@ -97,6 +97,15 @@ a {
     color: red;
 }
 
+#portfolio1 {
+    font-size: 55px;
+    color: rgb(22, 82, 245);
+}
+
+.PF1 {
+    background-color: aliceblue;
+}
+
 #panel-title1 {
     font-size: 40px;
 }
@@ -109,4 +118,13 @@ a {
 
 .tickerinfo {
     justify-content: center;
+    background-color: rgb(229, 236, 243);
+}
+
+#stockad {
+    text-align: left;
+}
+
+#Pstockticker {
+    text-align: right;
 }
