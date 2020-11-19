@@ -1,5 +1,5 @@
 from django import forms
-from . models import BankAccount #Product  #Stock
+from . models import BankAccount, Stock #Product  
 
 
 
@@ -28,7 +28,7 @@ from . models import BankAccount #Product  #Stock
 class BankAccountForm( forms.ModelForm):
     class Meta:
         model = BankAccount
-        fields = ['balance']
+        fields = ["user", "balance"]
         widgets = {
             'balance': forms.TextInput(
                 attrs={
@@ -37,7 +37,7 @@ class BankAccountForm( forms.ModelForm):
             )
         }    
 
-#class StockForm(forms.ModelForm):
-#    class Meta:
-#        model = Stock
-#        fields = ["ticker"]        
+class StockForm(forms.ModelForm):
+    class Meta:
+        model = Stock
+        fields = ["ticker"]        

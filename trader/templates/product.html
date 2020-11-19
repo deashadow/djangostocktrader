@@ -35,8 +35,8 @@
 {% block content %}
 
 <body id="Pbody" background="{% static 'base/img/buysell.jpg'%}">
-<div class="Product">
-      <form  action="{% url 'product' %}" class="form-inline navbar-left hidden-xs hidden-sm" role="search" method="POST">
+<div>
+      <form  action="{% url 'product' %}" class="form-inline" role="search" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                   <input type="search" class="form-control" placeholder="Enter Ticker Symbol" name="ticker">
@@ -48,7 +48,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <div class="Symbol"> <h4>Please enter the Ticker 'Symbol', ie: FB:</h4></div>
+      <div class="Symbol"> <h4><u>Ready to Trade?</u></h4></div>
        <div class="Symbol">
         <form action="product" method="POST">
             {% csrf_token %} 
@@ -64,8 +64,6 @@
                 
            </table>
         </form>
-
-
       </div>
       </div>
      <div>
@@ -77,50 +75,26 @@
 {% if api %}
 
     {% if api == "Error..." %}
-        There was an issue obtaining the data you requested,,  Try again !
+       <h5> There was a problem, please enter a Valid Ticker Symbol,  Try again !</h5>
 
     {% else %}
      <div>   <h2><u>{{ api.companyName }}</u></h2><br/></div>
-     <div> 
-           <h3> Price: ${{ api.latestPrice }}<br/><br>
-                Previous Close: ${{ api.previousClose }}<br/><br>
-                Market Cap: ${{ api.marketCap}}<br/><br>
-                52 wk High: ${{ api.week52High }}<br/><br>
-                52 wk Low: ${{ api.week52Low }}<br/><br>
-                YTD Change: {{ api.ytdChange }}<br/><br></h3>
+     <div class="col-3"> 
+              <span>  <h4> Price: ${{ api.latestPrice }}<br/><br></span>
+              <span>Previous Close: ${{ api.previousClose }}<br/><br></span>
+              <span>Market Cap: ${{ api.marketCap}}<br/><br></span>
+              <span>52 wk High: ${{ api.week52High }}<br/><br></span>
+              <span>52 wk Low: ${{ api.week52Low }}<br/><br></span>
+              <span>YTD Change: {{ api.ytdChange }}<br/><br></span>
+              <span>Chart YTD: {{ api.chartytd }}</span>
+                    </h4>
        </div>
     {% endif %}
 
 {% endif %}
 
 
-          <div class="row-2">
-             <div class="col">
-             <div><button type="button" class="togglebtn">Show Ticker plot map</button></div><br>
-              <div class="mytickertoggle">
-                  <img src="/static/base/img/msft.png" alt="Ticker data info"/>
-             </div>
-           </div>
-        </div>
-      </div>
-      </div>
-    
-<style>
-    .mytickertoggle {
-      display:none;
-      
-    }
-</style>
-    
-  </div>
-</div>
-<script>
-    $(document).ready(function(){
-	  $('.togglebtn').click(function(){
-   	$('.mytickertoggle').toggle();
-	});
-});
-</script>
+         
 
 <script>
 function getCookie(c_name) {

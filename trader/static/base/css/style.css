@@ -106,3 +106,7 @@ a {
     background-color: rgb(144, 223, 243);
     color: black;
 }
+
+.tickerinfo {
+    justify-content: center;
+}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Product, BankAccount
-from .forms import BankAccountForm #ProductForm
+from .models import Product, BankAccount, Stock
+from .forms import BankAccountForm, StockForm #ProductForm
 import yfinance as yf
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
@@ -31,7 +31,42 @@ def product( request):
 
     else: 
         return render(request, 'product.html' , {})
-    return render( request, 'product.html', {})
+
+
+def add_stock(request):
+    import requests 
+    import json
+
+    if request.method == 'POST':
+        form = StockForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Stock Has Been Added to your Portfolio! "))
+            return redirect('add_stock')
+    else: 
+        ticker = Stock.objects.all()
+        output = []
+        for ticker_item in ticker:
+            api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + str(ticker_item) + "/quote?token=pk_3a23ad6ed1d84ad1b10f01c72dc2d07e")
+            try:
+                api = json.loads(api_request.content)
+                output.append(api)
+            except Exception as e:
+                api = "Error..."
+
+        return render(request, 'add_stock.html' , {'ticker': ticker, 'output': output})
+
+
+def delete(request, stock_id):
+    item = Stock.objects.get(pk=stock_id)
+    item.delete()
+    messages.success(request, ("Stock Has Been deleted !"))
+    return redirect('delete_stock')
+
+def delete_stock(request):
+    ticker = Stock.objects.all()
+    return render(request, 'delete_stock.html' , {'ticker': ticker})
+
 
 
 def login_user( request):

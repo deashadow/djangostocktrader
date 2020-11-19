@@ -46,7 +46,7 @@
         {% else %}
             {{ request.user.username}}
         {% endif %}!<br><br>
-        Let's start Trading!!  Click on <a href="product">"Stock Ticker"</a><br>
+        Let's start Trading!!  Click on <a href="product">"Stock Ticker"</a> or <a  href="{% url 'add_stock' %}">"Portfolio"</a><br>
         <a href="{% url 'auth_logout' %}">Logout</a>
       </h1>
 {% else %}

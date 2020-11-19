@@ -29,5 +29,8 @@ urlpatterns = [
         path('product', views.product, name="product"),  #localhost:8000/product --> views.product()
        # path('products', views.products),
         path('getPrice/<id>', views.getPrice), #localhost:8000/getPrice/1 or something
+        path('add_stock.html', views.add_stock, name="add_stock"),
+        path('delete/<stock_id>', views.delete, name="delete"),
+        path('delete_stock.html', views.delete_stock, name="delete_stock"),
 
 ]       
