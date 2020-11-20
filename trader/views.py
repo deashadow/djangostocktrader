@@ -6,6 +6,14 @@ import yfinance as yf
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib import messages
+from pandas_datareader import data
+from pandas_datareader._utils import RemoteDataError
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+from datetime import datetime
+from django.conf import settings
+import os
 
 #pk_ccf5633147854b7ea5f5a155f396da5a
 
@@ -13,8 +21,6 @@ from django.contrib import messages
 def home( request):
     return render( request, 'home.html', {})
 
-#def product( request):
- #   return render( request, 'product.html', {})
 
 def product( request):
     import requests
@@ -23,6 +29,7 @@ def product( request):
     if request.method == 'POST':
         ticker = request.POST['ticker']
         api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + ticker + "/quote?token=pk_ccf5633147854b7ea5f5a155f396da5a")
+      
         try:
             api = json.loads(api_request.content)
         except Exception as e:
@@ -31,6 +38,23 @@ def product( request):
 
     else: 
         return render(request, 'product.html' , {})
+
+
+def ticker_chart( request):
+    import requests
+    import json
+
+    if request.method == 'POST':
+        tchart = request.POST['tchart']
+        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + tchart + "/chart/5d?token=pk_ccf5633147854b7ea5f5a155f396da5a")
+        try:
+            api = json.loads(api_request.content)
+        except Exception as e:
+            api = "Error..."
+        return render(request, 'ticker_chart.html' , {'api': api })
+
+    else: 
+        return render(request, 'ticker_chart.html' , {})
 
 
 def add_stock(request):
@@ -92,8 +116,6 @@ def logout_user( request):
     #messages.success( request, ('You have successfully logged out---See you soon!!'))
     return render(request, 'registration/logout.html')
 
-#def registration( request):
-   # return render( request, 'registration_form.html')
 
 def signup(request):
     if request.method == 'POST':
@@ -116,37 +138,28 @@ def about( request):
 def contact( request):
     return render( request, 'contact.html', {})
 
-#def products( request):
-  #  print('products called')
-   # products = Product.objects.all();
-   # context = { 'products' : products}
-    #return render( request, 'products.html', context)
+def products( request):
+    print('products called')
+    products = Product.objects.all();
+    context = { 'products' : products}
+    return render( request, 'products.html', context)
 
-#def product( request):
- #   print('product 1')
- #   if request.method == 'POST':
- #       productForm = ProductForm( request.POST)
- #       if productForm.is_valid() == False:
- #           return HttpResponse( productForm.errors)
- #       productForm.save();
- #       return redirect("/product");
- #   elif request.method == 'GET':
- #       productForm = ProductForm()
- #   print('product 2')
- #   context = { 'productForm' : productForm}
-   # productForm.save();
- #   return render( request, 'product.html', context)
+def bankaccount( request):
+    if request.method == 'POST':
+        bankaccountForm = BankAccountForm( request.POST)
+        if bankaccountForm.is_valid() == False:
+            return HttpResponse( bankaccountForm.errors)
+        bankaccountForm.save();
+        return redirect("/product");
+    elif request.method == 'GET':
+        bankaccountForm = BankAccountForm()
+    bankaccountForm.save();
+    return render( request, 'product.html', { 'bankaccountForm': BankAccountForm})
 
 
 def account(request):
-    balance = balance.objects.all()
-    #count = balance.objects.all().count()
-    context = { 
-        #'count': count,
-        'balance': balance,
-    }
-   # productForm.save();
-    return render( request, 'home.html', context)
+    bankroll = BankAccount.objects.balance()
+    return render(request, 'home.html' , {'bankroll': bankroll})
 
 
 
@@ -156,5 +169,21 @@ def getPrice( request, id):
     retval = { "price" : ticker.info['regularMarketPrice']}
     return JsonResponse(retval)
     
+def getInfo( symbol):
+    import requests
+    import json
+    STARTDATE = '2014-01-01'
+    ENDDATE = str( datetime.now().strftime('%Y-%m-%d'))
+    company = yf.download( symbol, start=STARTDATE, end=ENDDATE)
+    hist = company['Adj Close']
+    hist.plot()
+    plt.xlabel("Date")
+    plt.ylabel("Adjusted")
+    plt.title( symbol + " Price Data")
+    plt.show()
+    IMGDIR = os.path.join( settings.BASE_DIR, 'trader/static')
+    print('IMGDIR', IMGDIR)
+    plt.savefig( IMGDIR + '/my_plot.png')
+    plt.savefig( './trader/static/my_plot.png')
 
 

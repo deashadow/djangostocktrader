@@ -23,7 +23,8 @@ class BankAccount( models.Model):
     created=models.DateTimeField( auto_now_add=True)
     last_modified=models.DateTimeField( auto_now=True)
     def __str__( self):
-      return f"{self.user.first_name} {self.user.last_name} [${self.balance}]"
+      return "user={}, balance={}".format( self.user, self.balance)
+      
 
 
 class Stock(models.Model):

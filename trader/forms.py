@@ -29,13 +29,8 @@ class BankAccountForm( forms.ModelForm):
     class Meta:
         model = BankAccount
         fields = ["user", "balance"]
-        widgets = {
-            'balance': forms.TextInput(
-                attrs={
-                    'id': 'balance'
-                }
-            )
-        }    
+        
+       
 
 class StockForm(forms.ModelForm):
     class Meta:

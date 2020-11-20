@@ -35,7 +35,7 @@
 {% block content %}
 
 <body id="Pbody" background="{% static 'base/img/buysell.jpg'%}">
-<div>
+<div "col-md-4">
       <form  action="{% url 'product' %}" class="form-inline" role="search" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
@@ -43,31 +43,28 @@
                 </div>
                 <button type="submit" class="btn btn-success">Stock Quote ++</button>
       </form>
-</div>
-<br><br>
+ </div>
+<div "col-md-4" id="Pstockticker"> Go to<a href="{% url 'add_stock' %}">"Portfolio"</a></div><br><br>
 <div class="container">
   <div class="row">
     <div class="col">
       <div class="Symbol"> <h4><u>Ready to Trade?</u></h4></div>
-       <div class="Symbol">
-        <form action="product" method="POST">
+      <div class-"Symbol">
+         <form action="bankaccount" method="POST">
             {% csrf_token %} 
           <table>
-              {{productForm.as_table}}
+              {{bankaccountForm.as_table}}
                 <tr><td colspan="2"><br><button class="btn btn-primary btn-md" type="submit">Add</button>
                    <button class="btn btn-success btn-lg" type="submit">Buy</button>                 
                     <button class="btn btn-danger btn-md" type="submit">Sell</button>
                 </td></tr>
            </table>
-           <table>
-              {{bankaccountForm.as_table}}
-                
-           </table>
-        </form>
+         </form>
       </div>
       </div>
      <div>
-    </div>
+     </div>
+    
 {% if ticker %}
     {{ ticker }}
 {% endif %}
@@ -86,7 +83,7 @@
               <span>52 wk High: ${{ api.week52High }}<br/><br></span>
               <span>52 wk Low: ${{ api.week52Low }}<br/><br></span>
               <span>YTD Change: {{ api.ytdChange }}<br/><br></span>
-              <span>Chart YTD: {{ api.chartytd }}</h4></span>
+              <span>Chart YTD: {{ api.chart1y }}<a href="{% url 'ticker_chart' %}">"Stock Chart"</a></h4></span>
        </div>
      </div>
     {% endif %}
