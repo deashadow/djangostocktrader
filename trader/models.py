@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+#from fontawesome_5.fields import Iconfield
 # Create your models here.
 
 
@@ -29,7 +30,7 @@ class BankAccount( models.Model):
     last_modified=models.DateTimeField( auto_now=True)
     def __str__( self):
       return "user={}, bank_balance={}", "symbol={}", "current_price={}", "quantity={}".format( self.user, self.balance, self.symbol, self.current_price, self.quantity)
-    def getTotalCost( self):
+    def getTotalCost( self):  #buy function
         return float(self.bank_balance-(self.current_price * self.quantity))  
 
 
@@ -39,3 +40,7 @@ class Stock(models.Model):
       return self.ticker
     def getShareValue( self):
       return float(self.stockprice * self.quantity)
+
+
+#class Category(models.Model):
+ # icon = Iconfield

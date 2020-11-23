@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'bootstrap_themes',
     'compressor',
     'social_django',
+    'fontawesome_5',
 ]
 
 SITE_ID = 1

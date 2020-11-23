@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static%}
+{% comment %} {% load fontawesome_5 %} {% endcomment %}
 {% load compress%}
 
 
@@ -32,6 +33,7 @@
         />
     {% endcompress%}
     <title>Python Django StockTicker App</title>
+    {% comment %} {% fontawesome_5static %} {% endcomment %}
   </head>
   
   <body>
@@ -55,11 +57,11 @@
         Would you like to <a href="{% url 'auth_login' %}">Login</a>? or <a href="{% url 'registration_register'%}">SignUp</a>?
     </h1>
 {% endif %}<br><br>
-<h2>The Mystery Trader currently has {{ bankroll }} dollar(s) for Trading. <br>User location: {{ request.session.location }}</h2>
+{% comment %} <h2>The Mystery Trader currently has {{ bankroll }} dollar(s) for Trading. <br>User location: {{ request.session.location }}</h2> {% endcomment %}
  
 
 
-  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a><i class="fab fa-facebook"></i>
 
 
 

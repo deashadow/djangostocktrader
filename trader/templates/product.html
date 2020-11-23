@@ -56,9 +56,9 @@
           <table id="bankaccount">
               {{bankaccountForm.as_table}}
                 <tr><td colspan="2"><br>
-                    <button class="btn btn-success btn-lg" type="submit">Buy</button>                 
+                    <button class="btn btn-primary btn-lg" type="submit">Trade Now</button>
+                    <button id="calcTotal" class="btn btn-success btn-lg" type="button">Buy</button>                 
                     <button class="btn btn-danger btn-md" type="submit">Sell</button>
-                    <button id="calcTotal" class="btn btn-primary btn-md" type="button">Calculate Total</button>
                 </td></tr>
            </table>
          </form>
@@ -92,9 +92,6 @@
 
 {% endif %}
 
-
-         
-
 <script>
 function getCookie(c_name) {
     if (document.cookie.length > 0) {
@@ -127,6 +124,43 @@ $(document).ready( () => {
     })
   })
 });
+</script>
+
+<script>
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start, c_end));
+        }
+    }
+    return "";
+}
+$(document).ready( () => {
+  console.log('ready');
+  $("#symbol").focusout( ()=>{
+      name = $("#symbol").val();
+      var url = "/getPrice/" + name
+        $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+        });
+      $.ajax( {
+          type: 'POST',
+          url: url,
+          success: function( data) {
+               console.log( 'data='+JSON.stringify(data))
+              $("#price").val( data.price)
+          },
+          error: function( data) {
+              console.log('ajax failed')
+          }
+      })
+  })
+})
+
 </script>
 
 </body>

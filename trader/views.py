@@ -21,7 +21,9 @@ import io
 
 # Create your views here.
 def home( request):
-    return render( request, 'home.html', {})
+    print('home')
+    print(request)
+    return render( request, 'home.html')
 
 
 def product( request):
@@ -104,10 +106,13 @@ def login_user( request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        print(username)
         user = authenticate( request, username=username, password=password)
         if user is not None:
+            print('ron')
             login( request, user)
             messages.success( request, ('You have been Successfully logged in!! Let us start Tradding'))
+            print(request)
             return redirect('home')
            # return render( request, 'home.html')
         else:
@@ -193,7 +198,7 @@ def getInfo( tchart):
 
 
 def getTotal( request):
-    id = int(request.POST.get['id'])
+    id = int(request.POST['id'])
     print('getTotal:id='+str(id))
     bankaccount = get_object_or_404( BankAccount, id=id)
     total = bankaccount.getTotalCost()
