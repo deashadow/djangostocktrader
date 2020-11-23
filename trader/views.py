@@ -14,6 +14,8 @@ import numpy as np
 from datetime import datetime
 from django.conf import settings
 import os
+import urllib, base64
+import io
 
 #pk_ccf5633147854b7ea5f5a155f396da5a
 
@@ -25,7 +27,7 @@ def home( request):
 def product( request):
     import requests
     import json
-
+   
     if request.method == 'POST':
         ticker = request.POST['ticker']
         api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + ticker + "/quote?token=pk_ccf5633147854b7ea5f5a155f396da5a")
@@ -35,6 +37,11 @@ def product( request):
         except Exception as e:
             api = "Error..."
         return render(request, 'product.html' , {'api': api })
+
+    if request.method == 'POST':
+        bankaccount = request.POST['bankaccount']
+        context = {'bankaccountForm' : BankAccountForm}
+        return render ( request, 'product.html', {"bankaccountForm": BankAccountForm})
 
     else: 
         return render(request, 'product.html' , {})
@@ -51,7 +58,7 @@ def ticker_chart( request):
             api = json.loads(api_request.content)
         except Exception as e:
             api = "Error..."
-        return render(request, 'ticker_chart.html' , {'api': api })
+        return render(request, 'ticker_chart.html' , {'api': api } )
 
     else: 
         return render(request, 'ticker_chart.html' , {})
@@ -145,21 +152,18 @@ def products( request):
     return render( request, 'products.html', context)
 
 def bankaccount( request):
-    if request.method == 'POST':
-        bankaccountForm = BankAccountForm( request.POST)
-        if bankaccountForm.is_valid() == False:
-            return HttpResponse( bankaccountForm.errors)
-        bankaccountForm.save();
-        return redirect("/product");
-    elif request.method == 'GET':
-        bankaccountForm = BankAccountForm()
-    bankaccountForm.save();
-    return render( request, 'product.html', { 'bankaccountForm': BankAccountForm})
+    bankaccountForm = BankAccountForm()
+    return render( request, 'product.html', {"bankaccountForm": BankAccountForm})
+    
 
 
-def account(request):
-    bankroll = BankAccount.objects.balance()
-    return render(request, 'home.html' , {'bankroll': bankroll})
+def bankroll(request):
+    bankroll = BankAccount.objects.all()
+    context = {
+        'user': user,
+        'balance': balance,
+    }
+    return render(request, 'bankroll' , context)
 
 
 
@@ -169,17 +173,17 @@ def getPrice( request, id):
     retval = { "price" : ticker.info['regularMarketPrice']}
     return JsonResponse(retval)
     
-def getInfo( symbol):
+def getInfo( tchart):
     import requests
     import json
     STARTDATE = '2014-01-01'
     ENDDATE = str( datetime.now().strftime('%Y-%m-%d'))
-    company = yf.download( symbol, start=STARTDATE, end=ENDDATE)
+    company = yf.download( tchart, start=STARTDATE, end=ENDDATE)
     hist = company['Adj Close']
     hist.plot()
     plt.xlabel("Date")
     plt.ylabel("Adjusted")
-    plt.title( symbol + " Price Data")
+    plt.title( tchart + " Price Data")
     plt.show()
     IMGDIR = os.path.join( settings.BASE_DIR, 'trader/static')
     print('IMGDIR', IMGDIR)
@@ -187,3 +191,10 @@ def getInfo( symbol):
     plt.savefig( './trader/static/my_plot.png')
 
 
+
+def getTotal( request):
+    id = int(request.POST.get['id'])
+    print('getTotal:id='+str(id))
+    bankaccount = get_object_or_404( BankAccount, id=id)
+    total = bankaccount.getTotalCost()
+    return JsonResponse( {'total': total})

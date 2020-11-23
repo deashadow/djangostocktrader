@@ -44,27 +44,29 @@
                 <button type="submit" class="btn btn-success">Stock Quote ++</button>
       </form>
  </div>
-<div "col-md-4" id="Pstockticker"> Go to<a href="{% url 'add_stock' %}">"Portfolio"</a></div><br><br>
+<div "col-md-4" id="Pstockticker"> Go to<a href="{% url 'add_stock' %}">"Portfolio"</a></div>
+<div "col-md-4" id="Pstockticker"> Go back to<a href="product">"Stock Ticker"</a></div>
 <div class="container">
   <div class="row">
     <div class="col">
-      <div class="Symbol"> <h4><u>Ready to Trade?</u></h4></div>
+      {% comment %} <div class="Symbol"> <h4><a href="{% url 'bankaccount' %}"><u>Ready to Trade?</u></h4></div> {% endcomment %}
       <div class-"Symbol">
-         <form action="bankaccount" method="POST">
+          <form action="bankaccount" method="POST">
             {% csrf_token %} 
-          <table>
+          <table id="bankaccount">
               {{bankaccountForm.as_table}}
-                <tr><td colspan="2"><br><button class="btn btn-primary btn-md" type="submit">Add</button>
-                   <button class="btn btn-success btn-lg" type="submit">Buy</button>                 
+                <tr><td colspan="2"><br>
+                    <button class="btn btn-success btn-lg" type="submit">Buy</button>                 
                     <button class="btn btn-danger btn-md" type="submit">Sell</button>
+                    <button id="calcTotal" class="btn btn-primary btn-md" type="button">Calculate Total</button>
                 </td></tr>
            </table>
          </form>
       </div>
-      </div>
-     <div>
      </div>
-    
+   <div>
+</div>
+    <div id="outputArea"></div>
 {% if ticker %}
     {{ ticker }}
 {% endif %}
@@ -108,25 +110,23 @@ function getCookie(c_name) {
 }
 $(document).ready( () => {
   console.log('ready');
-  $("#name").focusout( ()=>{
-      name = $("#name").val();
-      var url = "/getPrice/" + name
-        $.ajaxSetup({
-        headers: { "X-CSRFToken": getCookie("csrftoken") }
-        });
-      $.ajax( {
-          type: 'POST',
-          url: url,
-          success: function( data) {
-               console.log( 'data='+JSON.stringify(data))
-              $("#price").val( data.price)
-          },
-          error: function( data) {
-              console.log('ajax failed')
-          }
-      })
+  $.ajaxSetup({
+      headers: { "X-CSRFToken": getCookie("csrftoken") }
+  });
+  $("#calcTotal").click( () => {
+    var url = "/getTotal"
+    var data = ""
+    $.ajax( {
+      type: "POST",
+      url: url,
+      data: data,
+      success: function( data) {
+        console.log('retrieved data')
+        $("#outputArea").text( JSON.stringify( data))
+      }
+    })
   })
-})
+});
 </script>
 
 </body>

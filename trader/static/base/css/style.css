@@ -1,4 +1,15 @@
 
+
+
+body {
+    overflow-y: scroll;
+}
+navbar {
+    position: sticky;
+    top:0;
+}
+
+
 #Business {
     height: 300px;
     width: auto;
@@ -27,6 +38,7 @@
 
 .Symbol {
     margin-left: 15px;
+    background-color: aliceblue;
 }
 
 #contact1 {
@@ -48,14 +60,16 @@
     justify-content: center;
 }
 
-.footer {
-    position: fixed;
+#basefooter {
+    position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -50px;
     width: 100%;
+    height: 50px;
     background-color: aliceblue;
     color: black;
     text-align: center;
+    
 }
 
 h3 {
@@ -67,12 +81,30 @@ a {
 }
 
 #homefooter {
-    margin-top: 335px;
+    position: absolute;
+    left: 0;
+    bottom: -50px;
+    width: 100%;
+    height: 150px;
+    padding-top: 40px;
+    background-color: aliceblue;
+    color: black;
+    text-align: center;
 }
 
-#basefooter {
-    margin-top: 200px;
+#aboutfooter {
+    position: absolute;
+    left: 0;
+    bottom: -50px;
+    width: 100%;
+    height: 150px;
+    padding-top: 40px;
+    background-color: aliceblue;
+    color: black;
+    text-align: center;
 }
+
+
 
 #Pbody {
     background-image: url ();
@@ -128,4 +160,12 @@ a {
 #Pstockticker {
     text-align: right;
     margin-top: 0px;
+}
+
+#chartdata {
+    background-color: rgb(160, 208, 247);
+}
+
+#bankaccount {
+    background-color: aliceblue;
 }

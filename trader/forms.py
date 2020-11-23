@@ -10,17 +10,17 @@ from . models import BankAccount, Stock #Product
   #      widgets = {
   #          'name': forms.TextInput(
   #              attrs={
-  #                  'id':'name'
+  #                  'id':'name_id'
   #              }
   #          ),
    #         'price': forms.TextInput(
    #             attrs={
-   #                 'id':'price'
+   #                 'id':'price_id'
    #             }
    #         ),
    #         'quantity': forms.TextInput(
    #             attrs={
-   #                 'id':'quantity'
+   #                 'id':'quantity_id'
    #             }
    #         )
    #     }
@@ -28,10 +28,35 @@ from . models import BankAccount, Stock #Product
 class BankAccountForm( forms.ModelForm):
     class Meta:
         model = BankAccount
-        fields = ["user", "balance"]
+        fields = ["user", "bank_balance", "symbol", "current_price", "quantity"]
+        widgets = {
+            'user': forms.TextInput(
+                attrs={
+                    'id':'user_id'
+                }
+            ),
+            'bank_balance': forms.TextInput(
+                attrs={
+                    'id':'balance_id'
+               }
+            ),
+            'symbol': forms.TextInput(
+                attrs={
+                    'id':'symbol_id'
+                }
+            ),
+            'current_price': forms.TextInput(
+                attrs={
+                    'id':'current_price_id'
+                }
+            ),
+            'quantity': forms.TextInput(
+                attrs={
+                    'id':'quantity_id'
+                }
+            )
+        } 
         
-       
-
 class StockForm(forms.ModelForm):
     class Meta:
         model = Stock

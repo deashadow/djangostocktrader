@@ -33,5 +33,8 @@ urlpatterns = [
         path('delete/<stock_id>', views.delete, name="delete"),
         path('delete_stock.html', views.delete_stock, name="delete_stock"),
         path('ticker_chart.html', views.ticker_chart, name="ticker_chart"),
+        path('getTotal', views.getTotal, name="getTotal"),
+        path('bankaccount', views.bankaccount, name="bankaccount"),
+        path('bankroll', views.bankroll, name="bankroll"),
 
-]       
+]       + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

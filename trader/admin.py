@@ -10,7 +10,7 @@ admin.site.register(Product, ProductAdmin)
 
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ('user', 'balance', 'created')
+    list_display = ('user', 'bank_balance', 'created')
 
 admin.site.register(BankAccount, BankAccountAdmin)
 
