@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import BankAccount, Product, Stock
+from .models import BankAccount, StockProduct, Stock
 # Register your models here.
 
-class ProductAdmin(admin.ModelAdmin):
+class StockProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'quantity')
 
-admin.site.register(Product, ProductAdmin)
+admin.site.register(StockProduct, StockProductAdmin)
 
 
 

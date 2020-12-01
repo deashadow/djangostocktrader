@@ -60,11 +60,27 @@ navbar {
     justify-content: center;
 }
 
+#T {
+    display: flex;
+    justify-content: right;
+    height: 200px;
+    width: auto;
+
+}
+
+#TR {
+    display: inline;
+    height: 165px;
+    width: auto;
+    justify-content: left;
+}
+
 #basefooter {
-    position: absolute;
+    position: fixed;
     left: 0;
-    bottom: -50px;
+    bottom: 0px;
     width: 100%;
+    margin-top: 10x;
     height: 50px;
     background-color: aliceblue;
     color: black;

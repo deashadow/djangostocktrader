@@ -1,34 +1,34 @@
 from django import forms
-from . models import BankAccount, Stock #Product  
+from . models import BankAccount, Stock, StockProduct  
 
 
 
-#class ProductForm( forms.ModelForm):
- #   class Meta:
-  #      model = Product
-  #      fields = ['name','price','quantity']
-  #      widgets = {
-  #          'name': forms.TextInput(
-  #              attrs={
-  #                  'id':'name_id'
-  #              }
-  #          ),
-   #         'price': forms.TextInput(
-   #             attrs={
-   #                 'id':'price_id'
-   #             }
-   #         ),
-   #         'quantity': forms.TextInput(
-   #             attrs={
-   #                 'id':'quantity_id'
-   #             }
-   #         )
-   #     }
+class StockProductForm( forms.ModelForm):
+    class Meta:
+        model = StockProduct
+        fields = ['name','price','quantity']
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'id':'name_id'
+                }
+            ),
+            'price': forms.TextInput(
+                attrs={
+                    'id':'price_id'
+                }
+            ),
+            'quantity': forms.TextInput(
+                attrs={
+                    'id':'quantity_id'
+                }
+            )
+        }
 
 class BankAccountForm( forms.ModelForm):
     class Meta:
         model = BankAccount
-        fields = ["user", "bank_balance", "symbol", "current_price", "quantity"]
+        fields = ["user", "bank_balance"]
         widgets = {
             'user': forms.TextInput(
                 attrs={
@@ -37,24 +37,10 @@ class BankAccountForm( forms.ModelForm):
             ),
             'bank_balance': forms.TextInput(
                 attrs={
-                    'id':'balance_id'
+                    'id':'bank_balance_id'
                }
-            ),
-            'symbol': forms.TextInput(
-                attrs={
-                    'id':'symbol_id'
-                }
-            ),
-            'current_price': forms.TextInput(
-                attrs={
-                    'id':'current_price_id'
-                }
-            ),
-            'quantity': forms.TextInput(
-                attrs={
-                    'id':'quantity_id'
-                }
             )
+            
         } 
         
 class StockForm(forms.ModelForm):

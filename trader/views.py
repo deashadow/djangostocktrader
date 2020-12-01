@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Product, BankAccount, Stock
-from .forms import BankAccountForm, StockForm #ProductForm
+from .models import BankAccount, Stock, StockProduct
+from .forms import BankAccountForm, StockForm, StockProductForm
 import yfinance as yf
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
@@ -14,8 +14,12 @@ import numpy as np
 from datetime import datetime
 from django.conf import settings
 import os
-import urllib, base64
+import urllib, base64, requests
 import io
+import json as simplejson
+#import seaborn as sns 
+from django.conf import settings
+#from matplotlib import rcParams
 
 #pk_ccf5633147854b7ea5f5a155f396da5a
 
@@ -49,13 +53,29 @@ def product( request):
         return render(request, 'product.html' , {})
 
 
+def stockproduct( request):
+    if request.method == 'POST':
+        form = StockForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Stock Purchase Has Been Added to your Portfolio! "))
+            return redirect('trading')
+    stockproductForm = StockProductForm()
+    context = { 'stockproductForm' : stockproductForm}
+    return render( request, 'trading.html', context)
+
+# def getTotalCost( self):  #buy function
+#         return float(self.current_price * self.quantity)
+
+
+
 def ticker_chart( request):
     import requests
     import json
 
     if request.method == 'POST':
         tchart = request.POST['tchart']
-        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + tchart + "/chart/5d?token=pk_ccf5633147854b7ea5f5a155f396da5a")
+        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + tchart + "/chart/10d?token=pk_ccf5633147854b7ea5f5a155f396da5a")
         try:
             api = json.loads(api_request.content)
         except Exception as e:
@@ -111,7 +131,7 @@ def login_user( request):
         if user is not None:
             print('ron')
             login( request, user)
-            messages.success( request, ('You have been Successfully logged in!! Let us start Tradding'))
+            messages.success( request, ('You have been Successfully logged in!!'))
             print(request)
             return redirect('home')
            # return render( request, 'home.html')
@@ -147,26 +167,29 @@ def signup(request):
 def about( request):
     return render( request, 'about.html', {})
 
+def trading( request):
+    return render( request, 'trading.html', {})
+
 def contact( request):
     return render( request, 'contact.html', {})
 
-def products( request):
+""" def products( request):
     print('products called')
     products = Product.objects.all();
     context = { 'products' : products}
-    return render( request, 'products.html', context)
+    return render( request, 'products.html', context) """
 
 def bankaccount( request):
     bankaccountForm = BankAccountForm()
-    return render( request, 'product.html', {"bankaccountForm": BankAccountForm})
+    return render( request, 'trading.html', {"bankaccountForm": BankAccountForm})
     
 
 
 def bankroll(request):
     bankroll = BankAccount.objects.all()
     context = {
-        'user': user,
-        'balance': balance,
+        'user': user_id,
+        'bank_balance': bank_balance_id,
     }
     return render(request, 'bankroll' , context)
 
@@ -174,8 +197,12 @@ def bankroll(request):
 
 
 def getPrice( request, id):
+    print('getPrice id='+str(id))
     ticker = yf.Ticker(id)
+    print('ticker='+str(ticker))
     retval = { "price" : ticker.info['regularMarketPrice']}
+    print('retval='+str(retval))
+
     return JsonResponse(retval)
     
 def getInfo( tchart):
@@ -197,9 +224,136 @@ def getInfo( tchart):
 
 
 
-def getTotal( request):
-    id = int(request.POST['id'])
-    print('getTotal:id='+str(id))
-    bankaccount = get_object_or_404( BankAccount, id=id)
-    total = bankaccount.getTotalCost()
-    return JsonResponse( {'total': total})
+def getTotalCost( request):
+    import requests 
+    import json
+    if request.method == 'POST':
+        form = StockProductForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Your purchased shares have Been Added to your Portfolio! "))
+            print('getTotalCost')
+            symbol = request.POST['symbol']
+            print('getTotalCost:symbol='+symbol)
+            stockproduct = get_object_or_404( StockProduct, name=symbol)
+            total = stockproduct.getTotalCost()
+            print('getTotalCost:total='+str(total))
+            return JsonResponse( {'total': total})
+
+
+
+
+
+def my_stock_plot_view( request, number):
+    # get stock data
+    json_data = simplejson.dumps(data)
+    return render(request, 'ticker_chart.html', {'json_plot_data': json_data})
+
+
+
+
+
+""" RAPIDAPI_KEY  = "8b6377d157msh2440774f3177ecbp1830a4jsn082485ce7a25" 
+RAPIDAPI_HOST = "apidojo-yahoo-finance-v1.p.rapidapi.com"
+
+symbol_string = ""
+inputdata = {}
+
+def fetchStockData(symbol):
+  
+  response = requests.request("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts?region=US&lang=en&symbol=" + symbol + "&interval=1d&range=3mo",
+    headers={
+      "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+      "X-RapidAPI-Key": "8b6377d157msh2440774f3177ecbp1830a4jsn082485ce7a25",
+      "Content-Type": "application/json"
+    }
+  )
+  
+  if(response.code == 200):
+    return response.body
+  else:
+    return None
+
+
+def parseTimestamp(inputdata):
+
+  timestamplist = []
+
+  timestamplist.extend(inputdata["chart"]["result"][0]["timestamp"])
+  timestamplist.extend(inputdata["chart"]["result"][0]["timestamp"])
+
+  calendertime = []
+
+  for ts in timestamplist:
+    dt = datetime.fromtimestamp(ts)
+    calendertime.append(dt.strftime("%m/%d/%Y"))
+
+  return calendertime
+
+def parseValues(inputdata):
+
+  valueList = []
+  valueList.extend(inputdata["chart"]["result"][0]["indicators"]["quote"][0]["open"])
+  valueList.extend(inputdata["chart"]["result"][0]["indicators"]["quote"][0]["close"])
+
+  return valueList
+
+
+def attachEvents(inputdata):
+
+  eventlist = []
+
+  for i in range(0,len(inputdata["chart"]["result"][0]["timestamp"])):
+    eventlist.append("open")  
+
+  for i in range(0,len(inputdata["chart"]["result"][0]["timestamp"])):
+    eventlist.append("close")
+
+  return eventlist
+
+
+if __name__ == "__main__":
+
+  try:
+
+    while len(symbol_string) <= 2:
+      symbol_string = raw_input("Enter the stock symbol: ")
+
+    retdata = fetchStockData(symbol_string)
+
+    
+
+    if (None != inputdata): 
+
+      inputdata["Timestamp"] = parseTimestamp(retdata)
+
+      inputdata["Values"] = parseValues(retdata)
+
+      inputdata["Events"] = attachEvents(retdata)
+
+      df = pd.DataFrame(inputdata)
+
+      sns.set(style="darkgrid")
+
+      rcParams['figure.figsize'] = 13,5
+      rcParams['figure.subplot.bottom'] = 0.2
+
+      
+      ax = sns.lineplot(x="Timestamp", y="Values", hue="Events",dashes=False, markers=True, 
+                   data=df, sort=False)
+
+
+      ax.set_title('Symbol: ' + symbol_string)
+      
+      plt.xticks(
+          rotation=45, 
+          horizontalalignment='right',
+          fontweight='light',
+          fontsize='xx-small'  
+      )
+
+      plt.show()
+
+  except Exception as e:
+    print ("Error" )  
+    print (e) """
