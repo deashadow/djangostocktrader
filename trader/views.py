@@ -75,7 +75,7 @@ def ticker_chart( request):
 
     if request.method == 'POST':
         tchart = request.POST['tchart']
-        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + tchart + "/chart/10d?token=pk_ccf5633147854b7ea5f5a155f396da5a")
+        api_request = requests.get("https://cloud.iexapis.com/stable/stock/" + tchart + "/chart/7d?token=pk_ccf5633147854b7ea5f5a155f396da5a")
         try:
             api = json.loads(api_request.content)
         except Exception as e:
@@ -225,20 +225,13 @@ def getInfo( tchart):
 
 
 def getTotalCost( request):
-    import requests 
-    import json
-    if request.method == 'POST':
-        form = StockProductForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            messages.success(request, ("Your purchased shares have Been Added to your Portfolio! "))
-            print('getTotalCost')
-            symbol = request.POST['symbol']
-            print('getTotalCost:symbol='+symbol)
-            stockproduct = get_object_or_404( StockProduct, name=symbol)
-            total = stockproduct.getTotalCost()
-            print('getTotalCost:total='+str(total))
-            return JsonResponse( {'total': total})
+    print('getTotalCost')
+    symbol = request.POST['symbol']
+    print('getTotalCost:symbol='+symbol)
+    stockproduct = get_object_or_404( StockProduct, name=symbol)
+    total = stockproduct.getTotalCost()
+    print('getTotalCost:total='+str(total))
+    return JsonResponse( {'total': total})
 
 
 

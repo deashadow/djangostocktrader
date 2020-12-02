@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'compressor',
     'social_django',
     'fontawesome_5',
+    'chartjs',
 ]
 
 SITE_ID = 1

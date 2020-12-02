@@ -185,3 +185,32 @@ a {
 #bankaccount {
     background-color: aliceblue;
 }
+
+#outputArea {
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+.chartpic {
+    height: 290px;
+    width: auto;
+}
+
+ #stockchartpic {
+    display: inline-flex;
+    justify-content: center;
+    padding-bottom: 45px;
+    padding-right: 200px;
+    padding-left: -250px;
+} 
+
+#chart {
+    justify-content: center;
+    text-align: center;
+}
+
+.mytickertoggle {
+    display: inline-flex;
+    
+    padding: 10px;
+}
