@@ -30,15 +30,16 @@ urlpatterns = [
         path('product', views.product, name="product"),  #localhost:8000/product --> views.product()
         path('getPrice/<id>', views.getPrice), #localhost:8000/getPrice/1 or something
         path('add_stock.html', views.add_stock, name="add_stock"),
-        path('delete/<stock_id>', views.delete, name="delete"),
+        path('delete/<share_id>', views.delete, name="delete"),
         path('delete_stock.html', views.delete_stock, name="delete_stock"),
         path('ticker_chart.html', views.ticker_chart, name="ticker_chart"),
         path('stockproduct', views.stockproduct, name="stockproduct"),
-        path('my_stock_plot_view', views.my_stock_plot_view, name="my_stock_plot_view"),
+        #path('my_stock_plot_view', views.my_stock_plot_view, name="my_stock_plot_view"),
         path('trading.html', views.trading, name="trading"),
         path('getTotalCost', views.getTotalCost, name="getTotalCost"),
         path('bankaccount', views.bankaccount, name="bankaccount"),
-       # path('fetchStockData', views.fetchStockData, name="fetchStockData"),
-        path('bankroll', views.bankroll, name="bankroll"),
+        path('trade.html', views.trade, name="trade"),
+        path('get_stock_graph', views.get_stock_graph, name="get_stock_graph"),
+        path('getstockinfo', views.getStockInfo, name="getstockinfo"),
 
 ]       + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

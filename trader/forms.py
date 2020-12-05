@@ -1,5 +1,5 @@
 from django import forms
-from . models import BankAccount, Stock, StockProduct  
+from . models import BankAccount, Stock, StockProduct, Share 
 
 
 
@@ -43,7 +43,7 @@ class BankAccountForm( forms.ModelForm):
             
         } 
         
-class StockForm(forms.ModelForm):
+class ShareForm(forms.ModelForm):
     class Meta:
-        model = Stock
+        model = Share
         fields = ["ticker"]        
