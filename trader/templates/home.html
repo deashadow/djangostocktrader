@@ -42,16 +42,16 @@
       <br>
       <div>
 {% if request.user.is_authenticated %}
-    <h1>
+    <h2>
         Welcome Trader!!
         {% if request.user.first_name %} 
             {{ request.user.first_name }}
         {% else %}
             {{ request.user.username}}
         {% endif %}!<br><br>
-        Let's start Trading!!  Click on <a href="product">"Stock Ticker"</a> or <a  href="{% url 'add_stock' %}">"Portfolio"</a> or <a href="{% url 'trade' %}"<br>
+        Let's start Trading!!  Click on <a href="product">"Stock Ticker"</a> or <a  href="{% url 'trade' %}">"Trade"</a>or<a  href="{% url 'add_stock' %}">"Portfolio"</a> or <a href="{% url 'trade' %}"<br>
         <a href="{% url 'auth_logout' %}">Logout</a>
-      </h1>
+      </h2> <br>
       <table class="table table-lg table-dark col-md-6 offset-md-3">
     <thead>
       <tr>

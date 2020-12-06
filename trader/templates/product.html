@@ -47,6 +47,7 @@
 <div "col-md-4" id="Pstockticker"> Go to<a href="{% url 'add_stock' %}">"Portfolio"</a></div>
 {% comment %} <div "col-md-4" id="Pstockticker"> Go back to<a href="product">"Stock Ticker"</a></div> {% endcomment %}
 <div id="Pstockticker"> Go to<a href="{% url 'trading' %}">"Trading"</a></div>
+<div id="Pstockticker"> Go to<a href="{% url 'trade' %}">"Trade"</a></div>
 
      
     <div id="outputArea"></div>
@@ -60,15 +61,15 @@
        <h5> There was a problem, please enter a Valid Ticker Symbol,  Try again !</h5>
 
     {% else %}
-     <div class="tickerinfo">   <h2><u>{{ api.companyName }}</u></h2><br/></div>
+     <div class="tickerinfo">   <h3><u>{{ api.companyName }}</u></h3><br/></div>
         <div class="tickerinfo" "col-3"> 
-              <span>  <h4> Price: ${{ api.latestPrice }}<br/><br></span>
+              <span>  <h5> Price: ${{ api.latestPrice }}<br/><br></span>
               <span>Previous Close: ${{ api.previousClose }}<br/><br></span>
               <span>Market Cap: ${{ api.marketCap}}<br/><br></span>
               <span>52 wk High: ${{ api.week52High }}<br/><br></span>
               <span>52 wk Low: ${{ api.week52Low }}<br/><br></span>
               <span>YTD Change: {{ api.ytdChange }}<br/><br></span>
-              <span>Chart YTD: {{ api.chart1y }}<a href="{% url 'ticker_chart' %}">"Stock Chart"</a></h4></span>
+              <span>Chart YTD: {{ api.chart1y }}<a href="{% url 'ticker_chart' %}">"Stock Chart"</a></h5></span>
        </div>
      </div>
     {% endif %}

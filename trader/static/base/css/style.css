@@ -182,7 +182,7 @@ a {
     background-color: rgb(160, 208, 247);
 }
 
-#bankaccount {
+.bankaccount {
     background-color: aliceblue;
 }
 
@@ -213,4 +213,18 @@ a {
     display: inline-flex;
     
     padding: 10px;
+}
+
+ #tickersymbolchart {
+    height: 400px;
+    width: auto;
+    text-align: center;
+} 
+
+#stockinfo {
+    background-color: aliceblue;
+}
+
+#tickerchartbackground {
+    background-color: rgb(187, 209, 228) !important;
 }

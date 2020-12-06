@@ -3,25 +3,25 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import BankAccount, Stock, Share, Account, StockProduct
 from .forms import BankAccountForm, ShareForm, StockProductForm
 import yfinance as yf
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib import messages
 from pandas_datareader import data
 from pandas_datareader._utils import RemoteDataError
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 from datetime import datetime
 from django.conf import settings
+import pandas as pd
+import numpy as np
 import os
 import urllib, base64, requests
 import io
 import json as simplejson
-#import seaborn as sns 
-from django.conf import settings
 from matplotlib import pylab
-#from django.views.decorators.csrf import csrf_exempt
+import matplotlib.pyplot as plt
 
+#from django.views.decorators.csrf import csrf_exempt
+#import seaborn as sns 
 #pk_ccf5633147854b7ea5f5a155f396da5a
 
 # Create your views here.
@@ -103,6 +103,7 @@ def ticker_chart( request):
             plt.plot(date_range, open_value)
             plt.plot(date_range, close_value)
             fig = plt.gcf()
+            plt.close()
             #convert graph into string buffer and then convert 64bit code into actual image
             buf = io.BytesIO()
             fig.savefig(buf, format='png')
@@ -111,10 +112,10 @@ def ticker_chart( request):
             uri = urllib.parse.quote(string)
         except Exception as e:
             api = "Error..."
-        return render(request, 'ticker_chart.html' , {'api': api } )
+        return render(request, 'ticker_chart.html' , {'data':uri,'api': api } )
 
     else: 
-        return render(request, 'ticker_chart.html' , {})
+        return render(request, 'ticker_chart.html' , {'tchart':"Enter a Ticker Symbol in the search"})
 
 
 
@@ -298,6 +299,7 @@ def get_stock_info(stocks):
 
 #@login_required
 #@csrf_exempt
+
 def trade(request):
     account = None
     stocks = []

@@ -38,7 +38,7 @@ urlpatterns = [
         path('trading.html', views.trading, name="trading"),
         path('getTotalCost', views.getTotalCost, name="getTotalCost"),
         path('bankaccount', views.bankaccount, name="bankaccount"),
-        path('trade.html', views.trade, name="trade"),
+        path('trade', views.trade, name="trade"),
         path('get_stock_graph', views.get_stock_graph, name="get_stock_graph"),
         path('getstockinfo', views.getStockInfo, name="getstockinfo"),
 
